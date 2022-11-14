@@ -1,16 +1,20 @@
+import React from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useSignup from "../../Hooks/useSignup";
+import Toast from "../../Components/Toast";
 
 function Copyright(props: any) {
   return (
@@ -30,7 +34,7 @@ function Copyright(props: any) {
 }
 
 const validationSchema = yup.object({
-  name: yup.string().required("Username is required"),
+  username: yup.string().required("Username is required"),
   email: yup
     .string()
     .email("Enter a valid email")
@@ -42,16 +46,23 @@ const validationSchema = yup.object({
 });
 const theme = createTheme();
 
-const Signup = () => {
+const Signup = (props: any) => {
+  let { userType } = useParams();
+ 
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const token = window.localStorage.getItem("token");
+  const { SignupAPI } = useSignup(userType);
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setLoading(true);
+   SignupAPI(values.username, values.email, values.password, setOpen, setLoading)
     },
   });
 
@@ -105,10 +116,12 @@ const Signup = () => {
                 label="Username"
                 name="username"
                 color="primary"
-                value={formik.values.name}
+                value={formik.values.username}
                 onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
                 onBlur={formik.handleBlur}
               />
               <TextField
@@ -142,6 +155,12 @@ const Signup = () => {
                 helperText={formik.touched.password && formik.errors.password}
                 onBlur={formik.handleBlur}
               />
+              {loading && (
+                <Grid container justifyContent="center">
+                  <CircularProgress />
+                </Grid>
+              )}
+
               <Button
                 type="submit"
                 fullWidth
@@ -169,6 +188,16 @@ const Signup = () => {
                   </Link>
                 </Grid>
               </Grid>
+              <Toast
+                open={open}
+                setOpen={setOpen}
+                text={
+                  token
+                    ? "Signed up successfully!"
+                    : "Email already exists!"
+                }
+                severity={token ? "success" : "error"}
+              />
             </Box>
           </Box>
           <Copyright sx={{ mt: 6 }} />

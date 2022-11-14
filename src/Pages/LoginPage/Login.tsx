@@ -47,7 +47,7 @@ const validationSchema = yup.object({
 const theme = createTheme();
 const Login = (props: any) => {
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading]=React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   let { userType } = useParams();
   const token = window.localStorage.getItem("token");
   const { LoginAPI } = useLogin(userType);

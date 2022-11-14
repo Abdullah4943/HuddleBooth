@@ -1,15 +1,17 @@
 import axios from "axios";
 
-const useLogin = (userType: any) => {
-  const LoginAPI = (
+const useSignup = (userType: any) => {
+  const SignupAPI = (
+    username: string,
     email: string,
     password: string,
     setOpen: (Params: any) => any,
     setLoading: (Params: any) => any
   ) => {
     axios
-      .post(`https://project2-p2.herokuapp.com/api/brands/login.json`, {
+      .post("https://project2-p2.herokuapp.com/api/brands.json", {
         brand: {
+          username: username,
           email: email,
           password: password,
         },
@@ -30,8 +32,7 @@ const useLogin = (userType: any) => {
         setLoading(false);
       });
   };
-
-  return { LoginAPI };
+  return { SignupAPI };
 };
 
-export default useLogin;
+export default useSignup;
