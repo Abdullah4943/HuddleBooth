@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const useLogin = (userType: any) => {
+  let navigate=useNavigate();
   const LoginAPI = (
     email: string,
     password: string,
@@ -22,6 +24,7 @@ const useLogin = (userType: any) => {
         );
         setOpen(true);
         setLoading(false);
+        navigate("/feed");
       })
       .catch(function (error: string) {
         window.localStorage.setItem("token", "");

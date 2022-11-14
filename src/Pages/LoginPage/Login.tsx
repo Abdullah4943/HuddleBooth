@@ -144,7 +144,7 @@ const Login = (props: any) => {
               />
               {loading && (
                 <Grid container justifyContent="center">
-                  <CircularProgress />
+                  <CircularProgress sx={{ color: "#303030" }} />
                 </Grid>
               )}
 
