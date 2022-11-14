@@ -1,3 +1,4 @@
+import React from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -14,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useLogin from "../../Hooks/useLogin";
+import Toast from "../../Components/Toast";
 
 function Copyright(props: any) {
   return (
@@ -42,8 +44,10 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 const theme = createTheme();
-const Login = () => {
+const Login = (props: any) => {
+  const [open, setOpen] = React.useState(false);
   let { userType } = useParams();
+  const token=window.localStorage.getItem("token");
   const { LoginAPI } = useLogin(userType);
   const formik = useFormik({
     initialValues: {
@@ -52,7 +56,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      LoginAPI(values.email, values.password);
+      LoginAPI(values.email, values.password, setOpen);
     },
   });
   return (
@@ -163,6 +167,16 @@ const Login = () => {
                   </Link>
                 </Grid>
               </Grid>
+              <Toast
+                open={open}
+                setOpen={setOpen}
+                text={
+                  token
+                    ? "Logged in successfully!"
+                    : "Incorrect email or password!"
+                }
+                severity={token ? "success" : "error"}
+              />
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
