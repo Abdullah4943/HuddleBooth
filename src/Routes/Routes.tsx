@@ -11,7 +11,7 @@ export const Navigation = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/:userType/login" element={<Login />} />
+        {/* <Route path="/:userType/login" element={<Login />} /> */}
         <Route path="/signup" element={<Signup />} />
       </Routes> 
     </Router>

@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
@@ -46,8 +47,9 @@ const validationSchema = yup.object({
 const theme = createTheme();
 const Login = (props: any) => {
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading]=React.useState(false);
   let { userType } = useParams();
-  const token=window.localStorage.getItem("token");
+  const token = window.localStorage.getItem("token");
   const { LoginAPI } = useLogin(userType);
   const formik = useFormik({
     initialValues: {
@@ -56,7 +58,8 @@ const Login = (props: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      LoginAPI(values.email, values.password, setOpen);
+      setLoading(true);
+      LoginAPI(values.email, values.password, setOpen, setLoading);
     },
   });
   return (
@@ -139,6 +142,12 @@ const Login = (props: any) => {
                 }
                 label="Remember me"
               />
+              {loading && (
+                <Grid container justifyContent="center">
+                  <CircularProgress />
+                </Grid>
+              )}
+
               <Button
                 type="submit"
                 fullWidth
