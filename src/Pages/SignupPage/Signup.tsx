@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
@@ -22,7 +22,7 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="/">
+      <Link color="inherit" to="/">
         Huddle Booth
       </Link>{" "}
       {new Date().getFullYear()}
@@ -159,9 +159,12 @@ const Signup = () => {
               <Grid container>
                 <Grid item>
                   <Link
-                    href="/"
-                    variant="body2"
-                    style={{ color: "#303030", marginLeft: "6rem" }}
+                    to="/"
+                    style={{
+                      color: "#303030",
+                      marginLeft: "6rem",
+                      fontSize: "14px",
+                    }}
                   >
                     {"Already have an account? Log in"}
                   </Link>

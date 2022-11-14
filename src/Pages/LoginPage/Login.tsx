@@ -8,12 +8,13 @@ import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link, useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useLogin from "../../Hooks/useLogin";
 
 function Copyright(props: any) {
   return (
@@ -24,7 +25,7 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="/">
+      <Link color="inherit" to="/">
         Huddle Booth
       </Link>{" "}
       {new Date().getFullYear()}
@@ -43,6 +44,8 @@ const validationSchema = yup.object({
 });
 const theme = createTheme();
 const Login = () => {
+  let { userType } = useParams();
+  const { LoginAPI } = useLogin(userType);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -50,7 +53,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      LoginAPI(values.email, values.password);
     },
   });
   return (
@@ -148,15 +151,14 @@ const Login = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2" style={{ color: "#303030" }}>
+                  <Link to="#" style={{ color: "#303030", fontSize: "14px" }}>
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link
-                    href="/signup"
-                    variant="body2"
-                    style={{ color: "#303030" }}
+                    to="/signup"
+                    style={{ color: "#303030", fontSize: "14px" }}
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>
