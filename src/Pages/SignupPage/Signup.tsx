@@ -15,6 +15,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useSignup from "../../Hooks/useSignup";
 import Toast from "../../Components/Toast";
+import { themeInterface } from "../../Assets/Styles/Styles";
 
 function Copyright(props: any) {
   return (
@@ -48,7 +49,7 @@ const theme = createTheme();
 
 const Signup = (props: any) => {
   let { userType } = useParams();
- 
+
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const token = window.localStorage.getItem("token");
@@ -62,7 +63,13 @@ const Signup = (props: any) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-   SignupAPI(values.username, values.email, values.password, setOpen, setLoading)
+      SignupAPI(
+        values.username,
+        values.email,
+        values.password,
+        setOpen,
+        setLoading
+      );
     },
   });
 
@@ -109,71 +116,73 @@ const Signup = (props: any) => {
               noValidate
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                fullWidth
-                id="name"
-                label="Username"
-                name="username"
-                color="primary"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.username && Boolean(formik.errors.username)
-                }
-                helperText={formik.touched.username && formik.errors.username}
-                onBlur={formik.handleBlur}
-              />
-              <TextField
-                margin="normal"
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                color="primary"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                onBlur={formik.handleBlur}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                color="primary"
-                autoComplete="current-password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-                onBlur={formik.handleBlur}
-              />
-              {loading && (
-                <Grid container justifyContent="center">
-                  <CircularProgress sx={{color:"#303030"}} />
-                </Grid>
-              )}
+              <ThemeProvider theme={themeInterface}>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="name"
+                  label="Username"
+                  name="username"
+                  color="primary"
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.username && Boolean(formik.errors.username)
+                  }
+                  helperText={formik.touched.username && formik.errors.username}
+                  onBlur={formik.handleBlur}
+                />
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  color="primary"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  onBlur={formik.handleBlur}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  color="primary"
+                  autoComplete="current-password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                  onBlur={formik.handleBlur}
+                />
+                {loading && (
+                  <Grid container justifyContent="center">
+                    <CircularProgress sx={{ color: "#303030" }} />
+                  </Grid>
+                )}
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  backgroundColor: "#303030",
-                  "&:hover": { backgroundColor: "black" },
-                }}
-              >
-                Sign Up
-              </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#303030",
+                    "&:hover": { backgroundColor: "black" },
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </ThemeProvider>
               <Grid container>
                 <Grid item>
                   <Link
@@ -192,9 +201,7 @@ const Signup = (props: any) => {
                 open={open}
                 setOpen={setOpen}
                 text={
-                  token
-                    ? "Signed up successfully!"
-                    : "Email already exists!"
+                  token ? "Signed up successfully!" : "Email already exists!"
                 }
                 severity={token ? "success" : "error"}
               />

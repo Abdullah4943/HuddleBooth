@@ -13,51 +13,30 @@ import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import useLogin from "../../Hooks/useLogin";
+import useForgotPassword from "../../Hooks/useForgotPassword";
 import Toast from "../../Components/Toast";
 import { themeInterface } from "../../Assets/Styles/Styles";
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" to="/">
-        Huddle Booth
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
+
 const validationSchema = yup.object({
   email: yup
     .string()
     .email("Enter a valid email")
     .required("Email is required"),
-  password: yup
-    .string()
-    .min(6, "Password should be of minimum 6 characters length")
-    .required("Password is required"),
 });
 const theme = createTheme();
-const Login = (props: any) => {
+const ForgotPassword = (props: any) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   let { userType } = useParams();
-  const token = window.localStorage.getItem("token");
-  const { LoginAPI } = useLogin(userType);
+  const { ForgotAPI } = useForgotPassword(userType);
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      LoginAPI(values.email, values.password, setOpen, setLoading);
+      ForgotAPI(values.email, setOpen, setLoading);
     },
   });
   return (
@@ -89,14 +68,14 @@ const Login = (props: any) => {
           </Avatar>
 
           <Typography component="h1" variant="h5" style={{ color: "#303030" }}>
-            Log in
+            Forgot Password
           </Typography>
 
           <Box
             component="form"
             onSubmit={formik.handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            sx={{ mt: 5 }}
           >
             <ThemeProvider theme={themeInterface}>
               {" "}
@@ -113,24 +92,6 @@ const Login = (props: any) => {
                 helperText={formik.touched.email && formik.errors.email}
                 onBlur={formik.handleBlur}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                color="primary"
-                autoComplete="current-password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-                onBlur={formik.handleBlur}
-              />
               {loading && (
                 <Grid container justifyContent="center">
                   <CircularProgress sx={{ color: "#303030" }} />
@@ -141,20 +102,20 @@ const Login = (props: any) => {
                 fullWidth
                 variant="contained"
                 sx={{
-                  mt: 3,
-                  mb: 2,
+                  mt: 5,
+                  mb: 4,
                   backgroundColor: "#303030",
                   color: "white",
                   "&:hover": { backgroundColor: "black" },
                 }}
               >
-                Log In
+                Send Reset Link
               </Button>
             </ThemeProvider>
             <Grid container>
               <Grid item xs>
-                <Link to="/forgotpassword" style={{ color: "#303030", fontSize: "14px" }}>
-                  Forgot password?
+                <Link to="/" style={{ color: "#303030", fontSize: "14px" }}>
+                  Back to Login
                 </Link>
               </Grid>
               <Grid item>
@@ -169,19 +130,14 @@ const Login = (props: any) => {
             <Toast
               open={open}
               setOpen={setOpen}
-              text={
-                token
-                  ? "Logged in successfully!"
-                  : "Incorrect email or password!"
-              }
-              severity={token ? "success" : "error"}
+              text={"Reset link has been sent to your mail!"}
+              severity={"success"}
             />
           </Box>
         </Box>
-        <Copyright sx={{ mt: 9, mb: 4 }} />
       </Container>
     </Box>
   );
 };
 
-export default Login;
+export default ForgotPassword;
