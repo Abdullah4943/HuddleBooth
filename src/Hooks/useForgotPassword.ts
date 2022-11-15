@@ -12,7 +12,7 @@ const useForgotPassword = (pwdType: any) => {
       .post("https://project2-p2.herokuapp.com/api/brands/password", {
         brand: {
           email: email,
-        },
+        }, 
       })
       .then(function (response: any) {
         console.log(response.data);

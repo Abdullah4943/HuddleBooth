@@ -42,7 +42,7 @@ const validationSchema = yup.object({
     .min(6, "Password should be of minimum 6 characters length")
     .required("Password is required"),
 });
-const theme = createTheme();
+
 const Login = (props: any) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -153,7 +153,10 @@ const Login = (props: any) => {
             </ThemeProvider>
             <Grid container>
               <Grid item xs>
-                <Link to="/forgotpassword" style={{ color: "#303030", fontSize: "14px" }}>
+                <Link
+                  to="/forgotpassword"
+                  style={{ color: "#303030", fontSize: "14px" }}
+                >
                   Forgot password?
                 </Link>
               </Grid>

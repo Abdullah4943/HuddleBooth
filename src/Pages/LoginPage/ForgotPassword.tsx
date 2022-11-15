@@ -23,7 +23,7 @@ const validationSchema = yup.object({
     .email("Enter a valid email")
     .required("Email is required"),
 });
-const theme = createTheme();
+
 const ForgotPassword = (props: any) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);

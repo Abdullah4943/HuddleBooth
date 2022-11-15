@@ -34,7 +34,6 @@ const validationSchema = yup.object({
 
 const Reset = (props: any) => {
   const [open, setOpen] = React.useState(false);
-  const token = window.localStorage.getItem("token");
   const { ResetPassword } = useResetPassword(props);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState(false);
