@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import useForgotPassword from "../../Hooks/useForgotPassword";
 import Toast from "../../Components/Toast";
 import { themeInterface } from "../../Assets/Styles/Styles";
