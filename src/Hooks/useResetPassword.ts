@@ -2,10 +2,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const useResetPassword = (props: any) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const ResetPassword = (
     reset_password_token: string,
-    password: string,
+    password: string, 
     confirmPassword: string,
     setLoading: (Params: any) => any,
     setOpen: (Params: any) => any,

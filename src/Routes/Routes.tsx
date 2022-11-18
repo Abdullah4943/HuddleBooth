@@ -17,6 +17,7 @@ export const Navigation = () => {
         <Route path="/signup" element={<Signup />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/feed" element={<Feed />} />
+          
         </Route>
       </Routes>
     </Router>

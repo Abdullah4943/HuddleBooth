@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const useSignup = (userType: any) => {
-  let navigate=useNavigate();
+  const navigate = useNavigate();
   const SignupAPI = (
     username: string,
     email: string,
@@ -10,6 +10,9 @@ const useSignup = (userType: any) => {
     setOpen: (Params: any) => any,
     setLoading: (Params: any) => any
   ) => {
+    const changeScreen = () => {
+      navigate("/feed");
+    };
     axios
       .post("https://project2-p2.herokuapp.com/api/brands.json", {
         brand: {
@@ -26,7 +29,7 @@ const useSignup = (userType: any) => {
         );
         setOpen(true);
         setLoading(false);
-        navigate("/feed");
+        setTimeout(changeScreen, 2000);
       })
       .catch(function (error: string) {
         window.localStorage.setItem("token", "");

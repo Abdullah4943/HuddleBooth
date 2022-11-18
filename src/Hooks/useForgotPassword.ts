@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const useForgotPassword = (pwdType: any) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const ForgotAPI = (
     email: string,
     setLoading: (Params: any) => any,
