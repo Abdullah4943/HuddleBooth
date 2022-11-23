@@ -4,8 +4,9 @@ export type adminDataType = {}[];
 
 export type adminContextType = {
   data: adminDataType;
-  challenges: any;
+  challenges: {}[];
   setChallenges: Dispatch<any>;
-  
+  adminData:{}[];
   setAdminData: Dispatch<any>;
 };
+ 

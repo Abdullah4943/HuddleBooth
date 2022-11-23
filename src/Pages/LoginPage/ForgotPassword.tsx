@@ -114,13 +114,16 @@ const ForgotPassword = (props: any) => {
             </ThemeProvider>
             <Grid container>
               <Grid item xs>
-                <Link to="/" style={{ color: "#303030", fontSize: "14px" }}>
+                <Link
+                  to={`/${userType}/login`}
+                  style={{ color: "#303030", fontSize: "14px" }}
+                >
                   Back to Login
                 </Link>
               </Grid>
               <Grid item>
                 <Link
-                  to="/signup"
+                  to={`/${userType}`}
                   style={{ color: "#303030", fontSize: "14px" }}
                 >
                   {"Don't have an account? Sign Up"}

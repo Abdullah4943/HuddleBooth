@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const useResetPassword = (props: any) => {
+const useResetPassword = (userType: any) => {
   const navigate = useNavigate();
   const ResetPassword = (
     reset_password_token: string,
-    password: string, 
+    password: string,
     confirmPassword: string,
     setLoading: (Params: any) => any,
     setOpen: (Params: any) => any,
@@ -13,11 +13,11 @@ const useResetPassword = (props: any) => {
     open: boolean
   ) => {
     const changeScreen = () => {
-      navigate("/");
+      navigate(`/${userType}/login`);
     };
     axios
-      .patch("https://project2-p2.herokuapp.com/api/brands/password", {
-        brand: {
+      .patch(`https://project2-p2.herokuapp.com/api/${userType}s/password`, {
+        [`${userType}`]: {
           reset_password_token: reset_password_token,
           password: password,
         },

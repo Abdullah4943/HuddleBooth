@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-const useForgotPassword = (pwdType: any) => {
+const useForgotPassword = (userType: any) => {
   const navigate = useNavigate();
   const ForgotAPI = (
     email: string,
@@ -9,16 +9,16 @@ const useForgotPassword = (pwdType: any) => {
     setOpen: (Params: any) => any
   ) => {
     axios
-      .post("https://project2-p2.herokuapp.com/api/brands/password", {
-        brand: {
+      .post(`https://project2-p2.herokuapp.com/api/${userType}s/password`, {
+        [`${userType}`]: {
           email: email,
-        }, 
+        },
       })
       .then(function (response: any) {
         console.log(response.data);
         setOpen(true);
         setLoading(false);
-        navigate("/resetpassword");
+        navigate(`/${userType}/resetpassword`);
       })
       .catch(function (error: string) {
         console.log(error);

@@ -5,9 +5,9 @@ export const themeInterface: ThemeOptions = createTheme({
     primary: {
       main: "#303030",
     },
-
+ 
     secondary: {
-      main: "#303030",
+      main: "#f9c712",
     },
   },
   shape:{

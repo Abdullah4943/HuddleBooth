@@ -76,6 +76,7 @@ export default class CenterMode extends Component {
                       color: "white",
                       mt: "10px",
                       px: "10px",
+                      "&:hover": { backgroundColor: "red" },
                     }}
                   >
                     <FavoriteBorderOutlinedIcon

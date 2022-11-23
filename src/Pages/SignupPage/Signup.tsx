@@ -7,7 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
@@ -48,12 +48,12 @@ const validationSchema = yup.object({
 const theme = createTheme();
 
 const Signup = (props: any) => {
-  let { userType } = useParams();
+  let { userType, screen } = useParams();
 
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const token = window.localStorage.getItem("token");
-  const { SignupAPI } = useSignup(userType);
+  const { SignupAPI } = useSignup(userType, screen);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -72,6 +72,9 @@ const Signup = (props: any) => {
       );
     },
   });
+  if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
+    return <Navigate to="/404_Not_Found" />;
+  }
 
   return (
     <Box
@@ -107,7 +110,7 @@ const Signup = (props: any) => {
               variant="h5"
               style={{ color: "#303030" }}
             >
-              Sign Up
+              Signup as {userType.toUpperCase()}
             </Typography>
 
             <Box
@@ -180,20 +183,20 @@ const Signup = (props: any) => {
                     "&:hover": { backgroundColor: "black" },
                   }}
                 >
-                  Sign Up
+                  SignUp
                 </Button>
               </ThemeProvider>
               <Grid container>
                 <Grid item>
                   <Link
-                    to="/"
+                    to={`/${userType}/login`}
                     style={{
                       color: "#303030",
                       marginLeft: "6rem",
                       fontSize: "14px",
                     }}
                   >
-                    {"Already have an account? Log in"}
+                    {"Already have an account? Login"}
                   </Link>
                 </Grid>
               </Grid>

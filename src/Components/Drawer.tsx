@@ -24,6 +24,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import Logout from "./Logout";
 
 const drawerWidth = 240;
 
@@ -48,15 +49,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -74,12 +66,14 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props: any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openDropDown, setOpenDropDown] = React.useState(false);
   const [openTricks, setOpenTricks] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState<number | null>(0);
+  // let selectedIndex = props.selectedIndex;
+  // let setSelectedIndex = props.setSelectedIndex();
+
   const [selectedIndexDropdown, setSelectedIndexDropdown] = React.useState<
     number | null
   >(null);
@@ -108,7 +102,7 @@ export default function MiniDrawer() {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
   ) => {
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
     setSelectedIndexDropdown(null);
     setSelectedIndexFooter(null);
     setSelectedIndexTricks(null);
@@ -119,7 +113,7 @@ export default function MiniDrawer() {
     index: number
   ) => {
     setSelectedIndexDropdown(index);
-    setSelectedIndex(1);
+    props.setSelectedIndex(1);
     setSelectedIndexTricks(null);
     setSelectedIndexFooter(null);
   };
@@ -129,7 +123,7 @@ export default function MiniDrawer() {
     index: number
   ) => {
     setSelectedIndexTricks(index);
-    setSelectedIndex(2);
+    props.setSelectedIndex(2);
     setSelectedIndexDropdown(null);
     setSelectedIndexFooter(null);
   };
@@ -139,7 +133,7 @@ export default function MiniDrawer() {
     index: number
   ) => {
     setSelectedIndexFooter(index);
-    setSelectedIndex(null);
+    props.setSelectedIndex(null);
     setSelectedIndexDropdown(null);
     setSelectedIndexTricks(null);
   };
@@ -167,10 +161,11 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
 
+          <Logout />
           <IconButton
             sx={{
               color: "#d6d6d6",
-              marginLeft: "10rem",
+              marginLeft: "8rem",
               "&:hover": {
                 color: "#f9c712",
               },
@@ -210,7 +205,7 @@ export default function MiniDrawer() {
                 }}
               >
                 <ListItemButton
-                  selected={selectedIndex === index}
+                  selected={props.selectedIndex === index}
                   onClick={(event) => handleListItemClick(event, index)}
                   sx={{
                     minHeight: 48,
@@ -234,7 +229,9 @@ export default function MiniDrawer() {
                       mr: open ? 1 : "auto",
                       justifyContent: "center",
                       color: "#d6d6d6",
-                      ...(selectedIndex === index && { color: "#303030" }),
+                      ...(props.selectedIndex === index && {
+                        color: "#303030",
+                      }),
                     }}
                   >
                     {index === 0 ? (
@@ -384,6 +381,12 @@ export default function MiniDrawer() {
             )
           )}
         </List>
+        {!open && (
+          <Box sx={{ backgroundColor: "#303030", padding: "8px" }}>
+            {" "}
+            <Logout />
+          </Box>
+        )}
 
         {open && (
           <>

@@ -7,15 +7,16 @@ import Button from "@mui/material/Button";
 import * as yup from "yup";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import LockIcon from "@mui/icons-material/Lock";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import useLogin from "../../Hooks/useLogin";
 import Toast from "../../Components/Toast";
 import { themeInterface } from "../../Assets/Styles/Styles";
+
 function Copyright(props: any) {
   return (
     <Typography
@@ -46,9 +47,9 @@ const validationSchema = yup.object({
 const Login = (props: any) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  let { userType } = useParams();
+  let { userType, screen } = useParams();
   const token = window.localStorage.getItem("token");
-  const { LoginAPI } = useLogin(userType);
+  const { LoginAPI } = useLogin(userType, screen);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -60,6 +61,10 @@ const Login = (props: any) => {
       LoginAPI(values.email, values.password, setOpen, setLoading);
     },
   });
+  if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
+    return <Navigate to="/404_Not_Found" />;
+  }
+
   return (
     <Box
       style={{
@@ -78,7 +83,7 @@ const Login = (props: any) => {
 
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -89,7 +94,7 @@ const Login = (props: any) => {
           </Avatar>
 
           <Typography component="h1" variant="h5" style={{ color: "#303030" }}>
-            Log in
+            Login as {userType.toUpperCase()}
           </Typography>
 
           <Box
@@ -148,40 +153,63 @@ const Login = (props: any) => {
                   "&:hover": { backgroundColor: "black" },
                 }}
               >
-                Log In
+                Login
               </Button>
-            </ThemeProvider>
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  to="/forgotpassword"
-                  style={{ color: "#303030", fontSize: "14px" }}
-                >
-                  Forgot password?
-                </Link>
+              <Grid container>
+                <Grid item xs>
+                  <Link
+                    to={`/${userType}/forgotpassword`}
+                    style={{ color: "#303030", fontSize: "14px" }}
+                  >
+                    Forgot password?
+                  </Link>
+                  <br />
+                  <br />
+                  <Link
+                    to="/admin/login"
+                    style={{ color: "#303030", fontSize: "14px" }}
+                  >
+                    Login as Admin
+                  </Link>
+                  <br></br>
+                  <Link
+                    to="/brand/login"
+                    style={{ color: "#303030", fontSize: "14px" }}
+                  >
+                    Login as Brand
+                  </Link>
+                  <br></br>
+                  <Link
+                    to="/customer/login"
+                    style={{ color: "#303030", fontSize: "14px" }}
+                  >
+                    Login as Customer
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    to={`/${userType}`}
+                    style={{ color: "#303030", fontSize: "14px" }}
+                  >
+                    {"Don't have an account?"}
+                    <br /> {"Signup as"} {userType}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link
-                  to="/signup"
-                  style={{ color: "#303030", fontSize: "14px" }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Toast
-              open={open}
-              setOpen={setOpen}
-              text={
-                token
-                  ? "Logged in successfully!"
-                  : "Incorrect email or password!"
-              }
-              severity={token ? "success" : "error"}
-            />
+              <Toast
+                open={open}
+                setOpen={setOpen}
+                text={
+                  token
+                    ? "Logged in successfully!"
+                    : "Incorrect email or password!"
+                }
+                severity={token ? "success" : "error"}
+              />
+            </ThemeProvider>{" "}
           </Box>
         </Box>
-        <Copyright sx={{ mt: 9, mb: 4 }} />
+        <Copyright sx={{ mt: 6, mb: 4 }} />
       </Container>
     </Box>
   );

@@ -17,6 +17,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Toast from "../../Components/Toast";
 import { themeInterface } from "../../Assets/Styles/Styles";
 import useResetPassword from "../../Hooks/useResetPassword";
+import { useParams } from "react-router-dom";
 
 const validationSchema = yup.object({
   reset_password_token: yup.string().required("Please enter your code"),
@@ -34,7 +35,8 @@ const validationSchema = yup.object({
 
 const Reset = (props: any) => {
   const [open, setOpen] = React.useState(false);
-  const { ResetPassword } = useResetPassword(props);
+  let { userType } = useParams();
+  const { ResetPassword } = useResetPassword(userType);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState(false);
 
@@ -181,13 +183,16 @@ const Reset = (props: any) => {
             </ThemeProvider>
             <Grid container>
               <Grid item xs>
-                <Link to="/" style={{ color: "#303030", fontSize: "14px" }}>
+                <Link
+                  to={`/${userType}/login`}
+                  style={{ color: "#303030", fontSize: "14px" }}
+                >
                   Back to Login
                 </Link>
               </Grid>
               <Grid item>
                 <Link
-                  to="/signup"
+                  to={`/${userType}`}
                   style={{ color: "#303030", fontSize: "14px" }}
                 >
                   {"Don't have an account? Sign Up"}
