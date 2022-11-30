@@ -71,8 +71,6 @@ export default function MiniDrawer(props: any) {
   const [open, setOpen] = React.useState(false);
   const [openDropDown, setOpenDropDown] = React.useState(false);
   const [openTricks, setOpenTricks] = React.useState(false);
-  // let selectedIndex = props.selectedIndex;
-  // let setSelectedIndex = props.setSelectedIndex();
 
   const [selectedIndexDropdown, setSelectedIndexDropdown] = React.useState<
     number | null

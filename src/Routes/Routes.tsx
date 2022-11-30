@@ -10,6 +10,8 @@ import LandingPage from "../Pages/Feed/LandingPage";
 import ProtectedRoutes from "./protectedRoutes";
 import ForgotPassword from "../Pages/LoginPage/ForgotPassword";
 import Reset from "../Pages/LoginPage/Reset";
+import ChallengeDetails from "../Pages/Feed/ChallengeDetails";
+import Profile from "../Pages/Feed/Profile";
 
 
 export const Navigation = () => {
@@ -24,6 +26,8 @@ export const Navigation = () => {
         <Route path="/404_Not_Found" element={<>Page not found</>} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/:userType/landingpage/:screen" element={<LandingPage />} />
+         <Route path="/:usertype/landingpage/challenges/challengedetails" element={<ChallengeDetails/>}></Route>
+         <Route path="/:usertype/landingpage/profile" element={<Profile/>}></Route>
         </Route>
       </Routes>
     </Router>

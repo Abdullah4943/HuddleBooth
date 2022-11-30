@@ -13,9 +13,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAdminDataTable from "../../Hooks/useAdminDataTable";
 import { adminContext } from "../../Contexts/Providers/AdminProvider";
+import SearchBar from "../../Components/SearchBar";
+import { Container } from "@mui/system";
 
-const AdminHome = () => {
+const AdminHome = (props: any) => {
   const navigate = useNavigate();
+  const [searchInput, setSearchInput] = React.useState("");
   const { userType } = useParams();
   const { adminData } = React.useContext(adminContext);
   const { AdminDataTable } = useAdminDataTable();
@@ -70,7 +73,7 @@ const AdminHome = () => {
 
   return (
     <>
-      <Box sx={{ width: "100%", overflow: "hidden" }}>
+      <Container sx={{ width: "100%", overflow: "hidden" }}>
         <Toolbar sx={{ height: "4rem" }}>
           <Typography
             component="div"
@@ -84,10 +87,15 @@ const AdminHome = () => {
           </Typography>
         </Toolbar>
         <Divider />
-
+        <Box sx={{ ml: 2 }}>
+          <SearchBar
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+          />
+        </Box>
         <TableContainer
           component={Paper}
-          sx={{ m: 7, ml: 10, maxHeight: "70vh", maxWidth: "85%" }}
+          sx={{ m: 5, ml: 4, maxHeight: "60vh", maxWidth: "90%" }}
         >
           <Table aria-label="customized table" align="center">
             <TableHead>
@@ -101,30 +109,36 @@ const AdminHome = () => {
             </TableHead>
             <TableBody>
               {adminData
-                ? adminData.map((row: any) => (
-                    <StyledTableRow key={row?.id}>
-                      <StyledTableCell align="center">
-                        {row?.id}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row?.name}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row?.email}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row?.challenges.length}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row?.tricks.length}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))
+                ? adminData
+                    .filter((row: any) => {
+                      return searchInput === ""
+                        ? row
+                        : row.name?.includes(searchInput.toLowerCase());
+                    })
+                    .map((row: any) => (
+                      <StyledTableRow key={row?.id}>
+                        <StyledTableCell align="center">
+                          {row?.id}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row?.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row?.email}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row?.challenges.length}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row?.tricks.length}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))
                 : null}
             </TableBody>
           </Table>
         </TableContainer>
-      </Box>
+      </Container>
     </>
   );
 };

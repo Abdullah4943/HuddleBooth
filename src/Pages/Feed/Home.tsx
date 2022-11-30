@@ -11,10 +11,6 @@ const Home = () => {
     navigate(`/${userType}/landingpage/home`);
   }, []);
 
-  // if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
-  //   navigate("/404_Not_Found");
-  // }
-
   return (
     <>
       <Box sx={{ width: "100%", overflow: "hidden" }}>

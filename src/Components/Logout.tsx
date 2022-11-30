@@ -8,8 +8,8 @@ import { themeInterface } from "../Assets/Styles/Styles";
 import { useParams } from "react-router-dom";
 
 const Logout = () => {
-  const navigate = useNavigate();
   const { userType } = useParams();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -24,6 +24,7 @@ const Logout = () => {
   };
 
   const handleMenuClose = () => {
+    navigate(`/${userType}/landingpage/profile`);
     setAnchorEl(null);
     handleMobileMenuClose();
   };

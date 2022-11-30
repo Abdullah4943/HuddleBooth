@@ -3,7 +3,7 @@ import MiniDrawer from "../../Components/Drawer";
 import { Box } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import Home from "./Home";
-import Challenges from "./Challenges";
+import { Challenges } from "./Challenges";
 import Tricks from "./Tricks";
 import Leaderboard from "./Leaderboard";
 import AdminHome from "./AdminHome";
